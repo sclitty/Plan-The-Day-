@@ -1,2 +1,2 @@
-# Plan-The-Day-
+# Plan-The-Day
 Day planner utilizing jQuery.
