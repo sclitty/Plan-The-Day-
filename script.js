@@ -6,8 +6,25 @@ console.log(moment().format("h A"));
 // Creating array for work day hours //
 var timeArray = [9, 10, 11, 12, 13, 14, 15, 16, 17];
 
-// Creating an array to save to local storage 
-// var textSave = [];
+// Creating an object array to save to local storage 
+var textSave = [{planText: 0, text: ""},
+                {planText: 1, text: ""},
+                {planText: 2, text: ""},
+                {planText: 3, text: ""},
+                {planText: 4, text: ""},
+                {planText: 5, text: ""},
+                {planText: 6, text: ""},
+                {planText: 7, text: ""},
+                {planText: 8, text: ""}
+                ];
+
+// Creating a variable to check localStorage
+var storageCheck = JSON.parse(localStorage.getItem("Daily Plan"));
+
+// Checking if local storage is null 
+if (storageCheck != null) {
+    textSave = storageCheck;
+};
 
 // Variable to get current time 
 var currentTime = moment().format("H");
@@ -26,6 +43,8 @@ for (var i = 0; i < timeArray.length; i++) {
     var timeRow = $("<div class = 'row time-block'>");
     var hourCol = $("<div class = 'col-md-2 hour'>");
     var textCol = $("<textarea class = 'col-md-8 '>");
+    // Putting text into textarea from textSave/localStorage
+    textCol.text(textSave[i].text);
     var saveCol = $("<button class = 'col-md-2 saveBtn'>");
     var btnIcon = $("<i class='fas fa-save'></i>"); 
 
@@ -37,8 +56,10 @@ for (var i = 0; i < timeArray.length; i++) {
     saveCol.append(btnIcon);
 
     // Adding separate id and data 
+    saveCol.attr("data-time", i);
     textCol.attr("data-time", i);
     textCol.attr("id", i);
+    
 
 
     // Adding content to page elements
@@ -64,18 +85,17 @@ for (var i = 0; i < timeArray.length; i++) {
 };
 
 
+$(document).on("click", ".saveBtn", function() {
+    var clickData = ($(this).attr("data-time"));
+    var clickText = $(`textarea[data-time=${clickData}]`).val();
+    for (var j = 0; j < textSave.length; j++) {
+        console.log(clickData);
+        if (textSave[j].planText === parseInt(clickData)) {
+            textSave[j].text = clickText;
+        }  
+    };
 
+    localStorage.setItem("Daily Plan", JSON.stringify(textSave));
+//  console.log(textSave);
 
-
-
-
-
-// TODO: Create event listener for buttons. 
-
-// TODO: Grab the value of the text area and save it to a var (to be able to save the text from the text area that is in the same row as button)
-
-// TODO: using localStorage.setItem save the text to local storage 
-
-// TODO: retrieve the data from local storage using localStorage.getItem show it back in the text area they belong to (how can I know what text from local storage goes to what text area?) 
-
-// localStorage snip --------------
+});
