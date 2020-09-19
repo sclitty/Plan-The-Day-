@@ -96,6 +96,6 @@ $(document).on("click", ".saveBtn", function() {
     };
 
     localStorage.setItem("Daily Plan", JSON.stringify(textSave));
-//  console.log(textSave);
+    console.log(textSave);
 
 });
