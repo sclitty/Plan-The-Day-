@@ -78,7 +78,7 @@ for (var i = 0; i < timeArray.length; i++) {
         textCol.attr("class", "col-md-8 past");
     } else if (timeArray[i] > currentTime) {
         textCol.attr("class", "col-md-8 future");
-    } else if (timeArray == currentTime) {
+    } else if (timeArray[i] == currentTime) {
         textCol.attr("class", "col-md-8 present");
     }
 
